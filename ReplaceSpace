@@ -1,0 +1,41 @@
+package com.lock;
+
+import java.util.Scanner;
+
+public class ReplaceSpace {
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please input a string:");
+		String str = sc.nextLine();
+		if(str == null){
+			System.out.println("null string");
+			return;
+		}
+		int count = 0;
+		int length = 0;
+		for(int i = 0; i < str.length(); ++i){
+			if(str.charAt(i) == ' '){
+				count++;
+			}
+			else {
+				length++;
+			}
+		}
+		int oldIndex = str.length() - 1;
+		int newLength = str.length() + count * 2;
+		char[] newString = new char[newLength];
+		int newLengthIndex = newLength - 1;
+		while(oldIndex >= 0 && newLengthIndex >= 0){
+			if(str.charAt(oldIndex) == ' '){
+				newString[newLengthIndex --] = '0';
+				newString[newLengthIndex --] = '2';
+				newString[newLengthIndex --] = '%';
+			}
+			else {
+				newString[newLengthIndex --] = str.charAt(oldIndex);
+			}
+			-- oldIndex;
+		}
+		System.out.println(String.valueOf(newString));
+	}
+}
