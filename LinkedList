@@ -1,0 +1,29 @@
+import java.util.ArrayList;
+import java.util.Stack; 
+class ListNode {
+    int val;
+    ListNode next = null;
+    ListNode(int val){
+       this.val = val;
+    }
+}
+public class Solution {
+    public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        ArrayList<Integer> a=new ArrayList<Integer>();
+        if(listNode==null || listNode.next==null){
+            return a;
+        }
+        Stack<ListNode> st = new Stack<ListNode>();
+        ListNode p=listNode;
+        while(p!=null){
+            st.push(p);
+            p=p.next;
+        }
+        while(!st.empty()){//判断栈是否为空
+            p=st.peek();
+            a.add(p.val);
+            st.pop();
+        }
+        return a;
+    }
+}
