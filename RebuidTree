@@ -1,0 +1,83 @@
+package com.lock;
+
+import java.util.Stack;
+
+public class RebuildTree {
+	class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+		TreeNode (int x) {
+			this.val = x;
+		}
+	}
+	public static void main(String[] args) throws Exception{
+		int[] pre = {1,2,4,7,3,5,6,8};
+		int[] in = {4,7,2,1,5,3,8,6};
+		TreeNode root = construct(pre, 0, pre.length - 1, in, 0, in.length - 1);
+		TreeNode Index = root;
+		postOrder(Index);
+	}
+	public static TreeNode construct(int[] pre, int startPre, int endPre, int[] in, int startIn, int endIn){
+		int rootvalue = pre[startPre];
+		if(pre == null || in == null){
+			return null;
+		}
+		RebuildTree rt = new RebuildTree();
+		TreeNode root = rt.new TreeNode(rootvalue);
+		//root.val = rootvalue;
+		root.left = null;
+		root.right = null;
+		int rootIndex = 0;
+		if(startPre == endPre){
+			if(startIn == endIn && pre[startPre] == in[startIn]){
+				return root;
+			}
+			else{
+				return null;
+			}
+		}
+		while(rootIndex <= endIn && in[rootIndex] != rootvalue){
+			rootIndex++;
+		}
+		if(rootIndex == endIn && in[rootIndex] != rootvalue){
+			return null;
+		}
+		int leftLength = rootIndex - startIn;
+		int leftPreEnd = startPre + leftLength;
+		if(leftLength > 0){
+			root.left = construct(pre, startPre+1, leftPreEnd, in, startIn, rootIndex - 1);
+		}
+		if(leftLength < endPre - startPre){
+			root.right = construct(pre, leftPreEnd+1, endPre, in, rootIndex + 1, endIn);
+		}
+		return root;
+	}
+	public static void postOrder(TreeNode treeNode){
+		if(treeNode == null){
+			return;
+		}
+		Stack<TreeNode> st = new Stack<TreeNode>();
+		TreeNode lastVisitNode = null;
+		TreeNode currentNode = treeNode;
+		while(currentNode != null){
+			st.push(currentNode);
+			currentNode = currentNode.left;
+		}
+		while(!st.empty()){
+			currentNode = st.pop();
+			if(currentNode.right != null && currentNode.right != lastVisitNode){
+				st.push(currentNode);
+				currentNode = currentNode.right;
+			    while(currentNode != null){
+			    	st.push(currentNode);
+			    	currentNode = currentNode.left;
+			    }
+			}
+			else {
+				System.out.println(currentNode.val);
+				lastVisitNode = currentNode;
+			}
+		}
+	}
+}
