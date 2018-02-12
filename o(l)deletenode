@@ -1,0 +1,46 @@
+package com.lock;
+
+public class Solution {
+	class ListNode {
+		int val;
+		ListNode next = null;
+		ListNode(int val){
+			this.val = val;
+		}
+	}
+	public static int deleteNode(ListNode listNode, int deleteVal){
+		if(listNode == null || listNode.next == null){
+			return listNode.val;
+		}
+		ListNode index = listNode.next;
+		while(index != null){
+			if(index.val == deleteVal){
+				index.val = index.next.val;
+				index.next = index.next.next;
+			}
+			else{
+				index = index.next;
+			}
+		}
+		return listNode.val;
+	}
+	public static void main(String[] args){
+		int[] in = {1,2,3,4,5,6};
+		ListNode ln;
+		Solution st = new Solution();
+		ln = st.new ListNode(in[0]);
+		ListNode index = ln;
+		for(int i = 1; i < in.length; ++i){
+			ListNode node = st.new ListNode(in[i]);
+			index.next = node;
+			index = index.next;
+		}
+		deleteNode(ln, 3);
+		System.out.println("delete success");
+	    index = ln;
+	    while(index != null){
+	    	System.out.println(index.val);
+	    	index = index.next;
+	    }
+	}
+}
