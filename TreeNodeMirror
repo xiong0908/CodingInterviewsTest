@@ -1,0 +1,26 @@
+package com.lock;
+
+public class Solution1 {
+	class TreeNode {
+		int val;
+		TreeNode left = null;
+		TreeNode right = null;
+		TreeNode(int val){
+			this.val = val;
+		}
+	}
+	public static void TreeNodeMirror(TreeNode treeNode){
+		if(treeNode == null || (treeNode.left == null && treeNode.right == null)){
+			return;
+		}
+		TreeNode tmp = treeNode.left;
+		treeNode.left = treeNode.right;
+		treeNode.right = tmp;
+		if(treeNode.left != null){
+			TreeNodeMirror(treeNode.left);
+		}
+		if(treeNode.right != null){
+			TreeNodeMirror(treeNode.right);
+		}
+	}
+}
