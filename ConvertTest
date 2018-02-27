@@ -1,0 +1,28 @@
+public class ConvertToBase {
+	public static String convert(int num, int con){
+		if(num < 0) {
+			return '-' + convert(-num, con);
+		}
+		else if(num < con){
+			return "" + num;
+		}
+		else{
+			return convert(num / con, con) + num % con;
+		}
+	}
+	public static String toHex(int num){
+		char[] map = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+		if(num == 0) return "0";
+		String ret = "";
+		if(num != 0){
+			ret = map[num & 0b1111] + ret;
+			num >>= 4;
+		}
+		return ret;
+	}
+	public static void main(String[] args){
+		int num = 10, con = 2;
+		System.out.println(convert(num, con));
+		System.out.println(toHex(num));
+	}
+}
